@@ -1,33 +1,59 @@
-import { useState } from 'react';
-import { map, remove } from 'lodash';
+import { useEffect, useState } from 'react';
+import { filter, map } from 'lodash';
 
 import 'components/notes/Notes.style.scss';
 
 import Note from 'components/notes/Note';
-import { useRandomUUID } from 'hooks/useRandomUUID';
+import { useSession } from 'hooks/useSession';
+import { postNote } from 'api/api-client';
+import { useNotes } from 'hooks/useNotes';
+
+import { Note as NoteType } from 'types/Note';
 
 const Notes = () => {
-  const [noteIds, setNoteIds] = useState<string[]>([]);
-  const generateUUID = useRandomUUID();
+  const [notes, setNotes] = useState<NoteType[]>([]);
+  const sessionId = useSession();
+  const { getNotes, getDeletedNotes, deleteNote, updateNote } = useNotes();
+
+  const filterNotes = (unfilteredNotes: NoteType[], deletedNoteIds: string[]) => {
+    const filteredNotes = filter(unfilteredNotes, (note) => !deletedNoteIds.includes(note.id));
+    setNotes(filteredNotes);
+  };
+
+  useEffect(() => {
+    const deletedNoteIds = getDeletedNotes();
+    getNotes(sessionId).then((fetchedNotes) => filterNotes(fetchedNotes, deletedNoteIds));
+    // we want to run this effect only on the 1st component render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnClick = () => {
-    const newNoteId = generateUUID();
-    const updatedNoteIds = [...noteIds, newNoteId];
-    setNoteIds(updatedNoteIds);
+    postNote(sessionId).then((note) => {
+      const updatedNotes = [...notes, note];
+      setNotes(updatedNotes);
+    });
   };
 
-  const handleOnNoteBinClick = (noteId: string) => () => {
-    const updatedNoteIds = remove(noteIds, (value) => value !== noteId);
-    setNoteIds(updatedNoteIds);
+  const handleOnBinIconClick = (noteId: string) => () => {
+    const deletedNoteIds = deleteNote(noteId);
+    filterNotes(notes, deletedNoteIds);
   };
 
-  const notes = map(noteIds, (noteId) => (
-    <Note key={noteId} onBinClick={handleOnNoteBinClick(noteId)} />
+  const handleOnValueChange = (noteId: string) => (value: string) =>
+    updateNote(sessionId, noteId, value);
+
+  const mappedNotes = map(notes, ({ id, body }) => (
+    <Note
+      key={`note-id-${id}`}
+      onBinIconClick={handleOnBinIconClick(id)}
+      onValueChangeCallback={handleOnValueChange(id)}
+      content={body}
+    />
   ));
 
   return (
     <div className="notes-container" onClick={handleOnClick}>
-      {notes}
+      {mappedNotes}
     </div>
   );
 };

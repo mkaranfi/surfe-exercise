@@ -13,18 +13,11 @@
   animation: animate 2s linear;
 }
 
-.note-header {
-  outline: none;
-  border: none;
-  border-bottom: 1px solid whitesmoke;
-  font-weight: bold;
-  font-size: 24px;
-}
-
 .note-body {
   border: none;
   margin: 10px 0;
-  font-size: 14px;
+  font-size: 16px;
+  min-height: 10vh;
 }
 
 .bin-icon {

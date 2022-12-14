@@ -10,7 +10,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea(
   { isInvalid = false, ...props }: Props,
   ref
 ) {
-  return <textarea ref={ref} rows={1} spellCheck {...props} />;
+  return <textarea ref={ref} spellCheck {...props} />;
 });
 
 export default TextArea;
