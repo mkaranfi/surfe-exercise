@@ -9,10 +9,6 @@
   background-color: white;
 }
 
-.note-container:after {
-  animation: animate 2s linear;
-}
-
 .note-body {
   border: none;
   margin: 10px 0;
@@ -33,4 +29,37 @@
 
 .note-container:hover .bin-icon {
   opacity: 1;
+}
+
+.remove-note {
+  animation: popOut forwards 1s ease-out 1;
+}
+
+@keyframes popOut {
+  0% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.5, 0.5);
+  }
+  100% {
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+}
+
+.add-note {
+  animation: popIn forwards 0.5s ease-out 1;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
 }

@@ -12,6 +12,7 @@ import { Note as NoteType } from 'types/Note';
 
 const Notes = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
+  const [deletedNoteId, setDeletedNoteId] = useState<string>('');
   const sessionId = useSession();
   const { getNotes, getDeletedNotes, deleteNote, updateNote } = useNotes();
 
@@ -35,8 +36,12 @@ const Notes = () => {
   };
 
   const handleOnBinIconClick = (noteId: string) => () => {
-    const deletedNoteIds = deleteNote(noteId);
-    filterNotes(notes, deletedNoteIds);
+    setDeletedNoteId(noteId);
+    setTimeout(() => {
+      const deletedNoteIds = deleteNote(noteId);
+      filterNotes(notes, deletedNoteIds);
+      // add delay to play pop out animation
+    }, 300);
   };
 
   const handleOnValueChange = (noteId: string) => (value: string) =>
@@ -44,6 +49,7 @@ const Notes = () => {
 
   const mappedNotes = map(notes, ({ id, body }) => (
     <Note
+      className={deletedNoteId === id ? 'remove-note' : ''}
       key={`note-id-${id}`}
       onBinIconClick={handleOnBinIconClick(id)}
       onValueChangeCallback={handleOnValueChange(id)}
