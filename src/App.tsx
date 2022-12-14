@@ -1,7 +1,11 @@
-import './App.css';
+import 'App.scss';
 
-const App = () => {
-  return <div className="App" />;
-};
+import Notes from 'components/notes/Notes';
+
+const App = () => (
+  <div>
+    <Notes />
+  </div>
+);
 
 export default App;
