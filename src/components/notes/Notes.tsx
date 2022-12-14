@@ -53,7 +53,10 @@ const Notes = () => {
 
   return (
     <div className="notes-container" onClick={handleOnClick}>
-      {mappedNotes}
+      <div className="notes-title-container">
+        <span className="notes-title">Click anywhere inside to add your note! 😃</span>
+      </div>
+      <div className="mapped-notes-container">{mappedNotes}</div>
     </div>
   );
 };

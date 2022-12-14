@@ -1,10 +1,22 @@
 .notes-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   min-height: 100vh;
   margin: 0 20vw;
-  flex-wrap: wrap;
   background: aliceblue;
 }
 
+.notes-title-container {
+  display: flex;
+  justify-content: center;
+  padding: 5vh 0;
+}
+
+.notes-title {
+  font-size: 22px;
+  font-weight: lighter;
+}
+
+.mapped-notes-container {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
