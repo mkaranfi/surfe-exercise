@@ -1,0 +1,15 @@
+.mentioned-user-entries {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mentioned-user-entry {
+  background-color: white;
+  padding: 0 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #FF7F50;
+  font-weight: bold;
+}

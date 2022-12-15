@@ -4,17 +4,23 @@ import { filter, map } from 'lodash';
 import 'components/notes/Notes.style.scss';
 
 import Note from 'components/notes/Note';
+import MostMentionedUsers from 'components/notes/mention/MostMentionedUsers';
+
 import { useSession } from 'hooks/useSession';
-import { postNote } from 'api/api-client';
 import { useNotes } from 'hooks/useNotes';
+import { useMostMentionedUsers } from 'hooks/useMostMentionedUsers';
+
+import { postNote } from 'api/notes-api-client';
 
 import { Note as NoteType } from 'types/Note';
 
 const Notes = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [deletedNoteId, setDeletedNoteId] = useState<string>('');
+
   const sessionId = useSession();
   const { getNotes, getDeletedNotes, deleteNote, updateNote } = useNotes();
+  const mostMentionedUsers = useMostMentionedUsers();
 
   const filterNotes = (unfilteredNotes: NoteType[], deletedNoteIds: string[]) => {
     const filteredNotes = filter(unfilteredNotes, (note) => !deletedNoteIds.includes(note.id));
@@ -60,7 +66,10 @@ const Notes = () => {
   return (
     <div className="notes-container" onClick={handleOnClick}>
       <div className="notes-title-container">
-        <span className="notes-title">Click anywhere inside to add your note! 😃</span>
+        <span className="notes-title">Click anywhere to add your note! 😃</span>
+        <div className="most-mentioned">
+          <MostMentionedUsers users={mostMentionedUsers} />
+        </div>
       </div>
       <div className="mapped-notes-container">{mappedNotes}</div>
     </div>

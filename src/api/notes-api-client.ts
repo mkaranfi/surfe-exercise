@@ -1,5 +1,6 @@
 import { HttpRequestMethod } from 'utilities/enums';
 import { Note } from 'types/Note';
+
 const getNotesAPIUrl = (sessionId: string) => `https://challenge.surfe.com/${sessionId}/notes`;
 const getNoteAPIUrl = (sessionId: string, noteId: string) =>
   `${getNotesAPIUrl(sessionId)}/${noteId}`;

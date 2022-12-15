@@ -1,4 +1,4 @@
-import { fetchNotes, postNote, putNote } from 'api/api-client';
+import { fetchNotes, postNote, putNote } from 'api/notes-api-client';
 
 import { Note } from 'types/Note';
 

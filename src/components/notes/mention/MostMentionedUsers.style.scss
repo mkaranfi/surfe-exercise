@@ -1,0 +1,22 @@
+.most-mentioned-wrapper {
+  padding: 20px;
+  margin: 15px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.most-mentioned-user {
+  color: #FF7F50;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.most-mentioned-title {
+  font-size: 12px;
+  margin-bottom: 11px;
+  font-weight: lighter;
+  text-align: center;
+}
