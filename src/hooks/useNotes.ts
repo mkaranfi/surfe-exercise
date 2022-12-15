@@ -1,8 +1,20 @@
+import { useEffect, useState } from 'react';
+import { filter } from 'lodash';
+
 import { fetchNotes, postNote, putNote } from 'api/notes-api-client';
 
-import { Note } from 'types/Note';
+import { useSession } from 'hooks/useSession';
+
+import { Note as NoteType, Note } from 'types/Note';
 
 export const useNotes = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  const sessionId = useSession();
+
+  const filterNotes = (unfilteredNotes: NoteType[], deletedNoteIds: string[]) =>
+    filter(unfilteredNotes, (note) => !deletedNoteIds.includes(note.id));
+
   const getDeletedNotes = (): string[] => {
     const deletedNoteIdsString: string | null = localStorage.getItem('deletedNoteIds');
     let deletedNoteIds = [];
@@ -12,22 +24,30 @@ export const useNotes = () => {
     return deletedNoteIds;
   };
 
+  useEffect(() => {
+    fetchNotes(sessionId).then((notes: Note[]) => {
+      const deletedNoteIds = getDeletedNotes();
+      const filteredNotes = filterNotes(notes, deletedNoteIds);
+      setNotes(filteredNotes);
+    });
+  }, [sessionId]);
+
+  const updateNotes = (updatedNotes: Note[]) => setNotes(updatedNotes);
+
   const deleteNote = (noteId: string) => {
     const deletedNoteIds = getDeletedNotes();
-    const updatedDeletedNotes = [...deletedNoteIds, noteId];
-    localStorage.setItem('deletedNoteIds', JSON.stringify(updatedDeletedNotes));
-    return updatedDeletedNotes;
+    const updatedDeletedNoteIds = [...deletedNoteIds, noteId];
+    localStorage.setItem('deletedNoteIds', JSON.stringify(updatedDeletedNoteIds));
+    const filteredNotes = filterNotes(notes, updatedDeletedNoteIds);
+    setNotes(filteredNotes);
   };
 
-  const getNotes = async (sessionId: string): Promise<Note[]> => await fetchNotes(sessionId);
-
-  const createNewNote = (sessionId: string) => {
-    postNote(sessionId);
+  const createNote = () => {
+    postNote(sessionId).then((note) => updateNotes([...notes, note]));
   };
 
-  const updateNote = (sessionId: string, noteId: string, noteContent: string) => {
+  const updateNote = (noteId: string, noteContent: string) =>
     putNote(sessionId, noteId, noteContent);
-  };
 
-  return { getNotes, createNewNote, updateNote, getDeletedNotes, deleteNote };
+  return { notes, createNote, updateNote, getDeletedNotes, deleteNote };
 };

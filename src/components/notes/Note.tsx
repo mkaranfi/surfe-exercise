@@ -45,8 +45,7 @@ const Note = (props: NoteProps) => {
   }, [value, onValueChangeCallback]);
 
   useEffect(() => {
-    const usersFilter = (user: User) =>
-      user.username.toLowerCase().indexOf(searchedValue.toLowerCase()) >= 0;
+    const usersFilter = (user: User) => user.username.toLowerCase().indexOf(searchedValue) >= 0;
     const updatedUsers = filter(users, usersFilter).slice(0, 5);
     setFilteredUsers(updatedUsers);
   }, [searchedValue]);
@@ -60,6 +59,8 @@ const Note = (props: NoteProps) => {
     if (isMentionStarted) {
       const newValue = `${searchedValue}${event.key}`.toLowerCase();
       setSearchedValue(newValue);
+    } else {
+      setSearchedValue('');
     }
     if (event.key === '@') {
       if (!isMentionStarted) {
