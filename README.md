@@ -91,13 +91,12 @@ with the list of all users you'll have to start again with '@' to see the list o
 ## Demos
 
 #### Showcasing: Note creation and save/load on refresh
-[![showcase 1](demos/thumbnail.jpeg)](demos/showcase1.mov)
+![](demos/showcase1.mov)
 
 #### Showcasing: Updating a note and Deleting a note
-[![showcase 2](demos/thumbnail.jpeg)](demos/showcase2.mov)
+![](demos/showcase2.mov)
 
 #### Showcasing: Displaying and selecting user mentions and Dragging & dropping user mentions
-[![showcase 3](demos/thumbnail.jpeg)](demos/showcase3.mov)
 ![](demos/showcase3.mov)
 
 ## Leftovers, Tech Debt, and TODOs
