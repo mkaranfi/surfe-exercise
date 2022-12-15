@@ -103,11 +103,11 @@ with the list of all users you'll have to start again with '@' to see the list o
 
 - Missing unit tests and testing framework setup
 - `Note.tsx` ended up with a lot of responsibilities, it should be reworked so that some of the responsibilities are delegated to a different component or a hook
-- Implement special style for user mentions inside inside the note
-- Make suggested users dropdown appear below '@'
-- Enable suggested users to always appear whenever you have an active '@' inside the note. This means to keep the list while typing, moving the cursor, deleting/using Backspace key, etc.
+- Implement special style for user mentions inside the note
+- Make suggested users dropdown appear below '@' instead of on the right side
+- Enable suggested users to always appear whenever you have an active '@' inside the note. This means to keep the list while typing, moving the cursor, deleting typed keys/using Backspace key, etc.
 - Enable dragging & dropping users anywhere inside the note (instead of just at the end)
-- Move colors used in SCSS files to a single file (either `colors.style.scss`  or `theme.style.scss`) and `@use` them to replace the hardcoded values
+- Move colors used throughout the project to a single file (either `colors.style.scss`  or `theme.style.scss`) and `@use` them to replace the hardcoded hex values
 - Define a blueprint for API Http requests. A lot of the Fetch requests have repeating/similar code parts. 
 
 ## Resources
