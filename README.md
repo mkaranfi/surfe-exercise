@@ -91,19 +91,13 @@ with the list of all users you'll have to start again with '@' to see the list o
 ## Demos
 
 #### Showcasing: Note creation and save/load on refresh
-<video width="320" height="240" controls>
-  <source src="demos/showcase1.mov" type="video/mp4">
-</video>
+[![showcase 1](demos/thumbnail.jpeg)](demos/showcase1.mov)
 
 #### Showcasing: Updating a note and Deleting a note
-<video width="320" height="240" controls>
-  <source src="demos/showcase2.mov" type="video/mp4">
-</video>
+[![showcase 2](demos/thumbnail.jpeg)](demos/showcase2.mov)
 
 #### Showcasing: Displaying and selecting user mentions and Dragging & dropping user mentions
-<video width="320" height="240" controls>
-  <source src="demos/showcase3.mov" type="video/mp4">
-</video>
+[![showcase 3](demos/thumbnail.jpeg)](demos/showcase3.mov)
 
 ## Leftovers, Tech Debt, and TODOs
 
