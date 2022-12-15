@@ -98,6 +98,7 @@ with the list of all users you'll have to start again with '@' to see the list o
 
 #### Showcasing: Displaying and selecting user mentions and Dragging & dropping user mentions
 [![showcase 3](demos/thumbnail.jpeg)](demos/showcase3.mov)
+![](demos/showcase3.mov)
 
 ## Leftovers, Tech Debt, and TODOs
 
