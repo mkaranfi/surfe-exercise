@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect, ChangeEvent, KeyboardEvent, DragEvent } from 'react';
-import { filter, isEmpty } from 'lodash';
+import { ChangeEvent, DragEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { isEmpty } from 'lodash';
 
 import 'components/notes/Note.style.css';
 import { ReactComponent as BinIcon } from 'assets/icons/bin.svg';
@@ -8,7 +8,6 @@ import TextArea from 'components/ui-controls/text-area/TextArea';
 import MentionedUsers from 'components/mention/MentionedUsers';
 
 import { useAutoHeightTextArea } from 'hooks/useAutoHeightTextArea';
-import { useUsers } from 'hooks/useUsers';
 import { useMention } from 'hooks/useMention';
 
 import { User } from 'types/User';
@@ -25,12 +24,10 @@ const Note = (props: NoteProps) => {
 
   const [value, setValue] = useState(content);
   const [searchedValue, setSearchedValue] = useState('');
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useAutoHeightTextArea(textAreaRef.current, value);
 
-  const users = useUsers();
   const { toggleMention, isMentionStarted, insertMention } = useMention();
 
   useEffect(() => {
@@ -44,28 +41,23 @@ const Note = (props: NoteProps) => {
     return () => clearTimeout(timer);
   }, [value, onValueChangeCallback]);
 
-  useEffect(() => {
-    const usersFilter = (user: User) => user.username.toLowerCase().indexOf(searchedValue) >= 0;
-    const updatedUsers = filter(users, usersFilter).slice(0, 5);
-    setFilteredUsers(updatedUsers);
-  }, [searchedValue]);
-
   const handleNoteValueChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const updatedValue = event.target?.value;
     setValue(updatedValue);
   };
 
   const handleOnKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (isMentionStarted) {
-      const newValue = `${searchedValue}${event.key}`.toLowerCase();
-      setSearchedValue(newValue);
-    } else {
-      setSearchedValue('');
-    }
     if (event.key === '@') {
       if (!isMentionStarted) {
         toggleMention();
       }
+      setSearchedValue('');
+      return;
+    }
+    if (isMentionStarted) {
+      const newValue = `${searchedValue}${event.key}`.toLowerCase();
+      setSearchedValue(newValue);
+    } else {
       setSearchedValue('');
     }
   };
@@ -73,7 +65,8 @@ const Note = (props: NoteProps) => {
   const handleOnMentionClick = (user: User) => () => {
     const noteWithMention = insertMention(value, user);
     setValue(noteWithMention);
-    setFilteredUsers([]);
+    setSearchedValue('');
+    toggleMention();
   };
 
   const handleDragEvent = (event: DragEvent<HTMLDivElement>) => {
@@ -102,7 +95,7 @@ const Note = (props: NoteProps) => {
           value={value}
         />
         {isMentionStarted && (
-          <MentionedUsers users={filteredUsers} onClickCallback={handleOnMentionClick} />
+          <MentionedUsers filterKeyword={searchedValue} onClickCallback={handleOnMentionClick} />
         )}
       </div>
       <BinIcon className="bin-icon" fill="#FF6666" onClick={onBinIconClick} />
