@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 
-import 'components/notes/mention/MentionedUsers.style.scss';
+import 'components/mention/MentionedUsers.style.scss';
 
 import { User } from 'types/User';
 

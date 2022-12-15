@@ -5,7 +5,7 @@ import 'components/notes/Note.style.css';
 import { ReactComponent as BinIcon } from 'assets/icons/bin.svg';
 
 import TextArea from 'components/ui-controls/text-area/TextArea';
-import MentionedUsers from 'components/notes/mention/MentionedUsers';
+import MentionedUsers from 'components/mention/MentionedUsers';
 
 import { useAutoHeightTextArea } from 'hooks/useAutoHeightTextArea';
 import { useUsers } from 'hooks/useUsers';

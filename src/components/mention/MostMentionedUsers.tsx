@@ -1,16 +1,14 @@
 import { DragEvent } from 'react';
 import { map } from 'lodash';
 
-import 'components/notes/mention/MostMentionedUsers.style.scss';
+import 'components/mention/MostMentionedUsers.style.scss';
 
 import { User } from 'types/User';
 
-interface MostMentionedUsersProps {
-  users: User[];
-}
+import { useMostMentionedUsers } from 'hooks/useMostMentionedUsers';
 
-const MostMentionedUsers = (props: MostMentionedUsersProps) => {
-  const { users } = props;
+const MostMentionedUsers = () => {
+  const users = useMostMentionedUsers();
 
   const handleDragStart =
     (username: string) =>
